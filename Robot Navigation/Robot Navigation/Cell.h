@@ -9,9 +9,12 @@ class Cell
 {
 private:
 	int fX, fY; // Coordiates of Cell
-	Cell * fNorth, fEast, fSouth, fWest; // Connections to Adjasent Cells
+	Cell<T> * fNorth; Cell<T> * fEast; Cell<T> * fSouth; Cell<T> * fWest; // Connections to Adjasent Cells
 	T fValue;
 
+	
+
+public:
 	Cell()
 	{
 		fX = 0; fY = 0;
@@ -19,20 +22,24 @@ private:
 		fValue = T();
 	}
 
-public:
 	Cell(const T & aValue, int aX, int aY);
 
-	void setNorth(Cell & aCell);
-	void setEast(Cell & aCell);
-	void setSouth(Cell & aCell);
-	void setWest(Cell & aCell);
+	void setNorth(Cell<T> & aCell);
+	void setEast(Cell<T> & aCell);
+	void setSouth(Cell<T> & aCell);
+	void setWest(Cell<T> & aCell);
 	void remove();
 
 	const T & getValue() const;
-	const Cell & getNorth() const;
-	const Cell & getEast() const;
-	const Cell & getSouth() const;
-	const Cell & getWest() const;
+	const Cell<T> & getNorth() const;
+	const Cell<T> & getEast() const;
+	const Cell<T> & getSouth() const;
+	const Cell<T> & getWest() const;
+
+	const bool hasNorth() const;
+	const bool hasEast() const;
+	const bool hasSouth() const;
+	const bool hasWest() const;
 
 	const int getX() const;
 	const int getY() const;
@@ -53,9 +60,16 @@ Cell<T>::Cell(const T & aValue, int aX, int aY)
  * Sets pointer to the Cell to the North.
  */
 template<class T>
-void Cell<T>::setNorth(Cell & aCell)
+void Cell<T>::setNorth(Cell<T> & aCell)
 {
 	aCell.fSouth = this;
+
+	if (fNorth != nullptr)
+	{
+		aCell.fNorth = fNorth;
+		fNorth->fSouth = &aCell;
+	}
+
 	fNorth = &aCell;
 }
 
@@ -63,9 +77,16 @@ void Cell<T>::setNorth(Cell & aCell)
  * Sets pointer to the Cell to the East.
  */
 template<class T>
-void Cell<T>::setEast(Cell & aCell)
+void Cell<T>::setEast(Cell<T> & aCell)
 {
 	aCell.fWest = this;
+
+	if (fEast != nullptr)
+	{
+		aCell.fEast = fEast;
+		fEast->fWest = &aCell;
+	}
+
 	fEast = &aCell;
 }
 
@@ -73,9 +94,16 @@ void Cell<T>::setEast(Cell & aCell)
  * Sets pointer to the Cell to the South.
  */
 template<class T>
-void Cell<T>::setSouth(Cell & aCell)
+void Cell<T>::setSouth(Cell<T> & aCell)
 {
 	aCell.fNorth = this;
+
+	if (fSouth != nullptr)
+	{
+		aCell.fSouth = fSouth;
+		fSouth->fNorth = &aCell;
+	}
+
 	fSouth = &aCell;
 }
 
@@ -83,9 +111,16 @@ void Cell<T>::setSouth(Cell & aCell)
  * Sets pointer to the Cell to the West.
  */
 template<class T>
-void Cell<T>::setWest(Cell & aCell)
+void Cell<T>::setWest(Cell<T> & aCell)
 {
 	aCell.fEast = this;
+
+	if (fWest != nullptr)
+	{
+		aCell.fWest = fWest;
+		fWest->fEast = &aCell;
+	}
+
 	fWest = &aCell;
 }
 
@@ -148,6 +183,30 @@ template<class T>
 const Cell<T> & Cell<T>::getWest() const
 {
 	return *fWest;
+}
+
+template<class T>
+const bool Cell<T>::hasNorth() const
+{
+	return fNorth != nullptr;
+}
+
+template<class T>
+const bool Cell<T>::hasEast() const
+{
+	return fEast != nullptr;
+}
+
+template<class T>
+const bool Cell<T>::hasSouth() const
+{
+	return fSouth != nullptr;
+}
+
+template<class T>
+const bool Cell<T>::hasWest() const
+{
+	return fWest != nullptr;
 }
 
 /**

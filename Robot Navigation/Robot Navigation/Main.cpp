@@ -3,9 +3,17 @@
 #include <iostream>
 #include <string>
 
+void setWall(Grid <std::string>* aCellGrid, int aX, int aY, int aH, int aW)
+{
+	std::string lWall = "wal";
+	for (int j = 0; j < aH; j++)
+		for (int i = 0; i < aW; i++)
+			aCellGrid->setCellValue(aX + i, aY + j, lWall);
+}
+
 int main()
 {
-	Cell<std::string> lOrigin("clear", 0, 0);
+	Cell<std::string> lOrigin("clr", 0, 0);
 
 	Cell<std::string> * lCell = &lOrigin;
 
@@ -31,6 +39,10 @@ int main()
 		}
 	}
 
+
+
+
+
 	Grid<std::string> lGrid(lCellGrid[0][0]);
 
 
@@ -41,9 +53,9 @@ int main()
 	{
 		for (int i = 0; i < lGrid.getWitdh(); i++)
 		{
-			std::cout << "  |  " << lGrid.getCellValue(i, j);
+			std::cout << "    " << lGrid.getCellValue(i, j);
 		}
-		std::cout << "  |  " << std::endl;
+		std::cout << "    " << std::endl;
 	}
 
 

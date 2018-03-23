@@ -1,4 +1,11 @@
 #pragma once
+/**
+ * Cell Container, Used to define a cell used part of a grid system
+ * @version 1.2.0
+ * @author J.P.Galovic
+ * @date March 2018
+ */
+
 
 #include "Cell.h"
 
@@ -9,7 +16,7 @@ class Grid
 {
 private:
 	int fMinX, fMaxX, fMinY, fMaxY; // Grid Limits
-	const Cell<T> * fOrigin; // Origin of grid
+	Cell<T> * fOrigin; // Origin of grid
 
 	Grid()
 	{
@@ -19,6 +26,8 @@ private:
 
 public:
 	Grid(const Cell<T> & aOrigin);
+
+	void setCellValue(int aX, int aY, const T & aValue);
 
 	const Cell<T> & getCell(int aX, int aY) const;
 	const T & getCellValue(int aX, int aY) const;
@@ -33,11 +42,11 @@ public:
 };
 
 template<class T>
-Grid<T>::Grid(const Cell<T> & aCell)
+Grid<T>::Grid(Cell<T> & aCell)
 {
 	// Find Cell 0,0. Assume complete grid (no gaps) and assume that 0,0 exists
 	// Find Horizontal
-	const Cell<T> * lCell = & aCell;
+	Cell<T> * lCell = & aCell;
 	while (lCell->getX() != 0)
 	{
 		if (lCell->getX() > 0)
@@ -75,6 +84,16 @@ Grid<T>::Grid(const Cell<T> & aCell)
 	while (lCell->hasNorth())
 		lCell = &lCell->getNorth();
 	fMinY = lCell->getY();
+}
+
+template<class T>
+void Grid<T>::setCellValue(int aX, int aY, const T & aValue)
+{
+	// Get Cell
+	Cell<T> * lCell = fOrigin;
+
+	// Set Got
+	lCell->setValue(aValue);
 }
 
 template<class T>

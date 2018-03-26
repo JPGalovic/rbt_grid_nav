@@ -1,6 +1,6 @@
 #pragma once
 /**
- * Cell Container, Used to define a cell used part of a grid system
+ * Grid, Used to define a set of Cells for within a grid system.
  * @version 1.2.0
  * @author J.P.Galovic
  * @date March 2018
@@ -9,7 +9,9 @@
 
 #include "Cell.h"
 
+#include <string>
 #include <stdexcept>
+#include <cstdlib>
 
 template<class T>
 class Grid
@@ -18,35 +20,29 @@ private:
 	int fMinX, fMaxX, fMinY, fMaxY; // Grid Limits
 	Cell<T> * fOrigin; // Origin of grid
 
-	Grid()
-	{
-		fWidth = 0; fHeight = 0;
-		fOrigin = nullptr;
-	}
-
 public:
-	Grid(const Cell<T> & aOrigin);
+	Grid(Cell<T> & aOrigin); // Construct Grid from Cell
 
-	void setCellValue(int aX, int aY, const T & aValue);
+	Cell<T> & getCell(int aX, int aY);
 
-	const Cell<T> & getCell(int aX, int aY) const;
-	const T & getCellValue(int aX, int aY) const;
+	T & getCellValue(int aX, int aY);
+	
+	int getMinX();
+	int getMaxX();
+	int getMinY();
+	int getMaxY();
 
-	const int getMinX() const;
-	const int getMaxX() const;
-	const int getMinY() const;
-	const int getMaxY() const;
+	int getWidth();
+	int getHeight();
 
-	const int getWitdh() const;
-	const int getHeight() const;
+	void setCellValue(T & aValue, int aX, int aY);
 };
 
 template<class T>
-Grid<T>::Grid(Cell<T> & aCell)
+inline Grid<T>::Grid(Cell<T>& aOrigin)
 {
-	// Find Cell 0,0. Assume complete grid (no gaps) and assume that 0,0 exists
-	// Find Horizontal
-	Cell<T> * lCell = & aCell;
+	// Traverse to Origin (0,0)
+	Cell<T>* lCell = &aOrigin;
 	while (lCell->getX() != 0)
 	{
 		if (lCell->getX() > 0)
@@ -57,56 +53,46 @@ Grid<T>::Grid(Cell<T> & aCell)
 
 	while (lCell->getY() != 0)
 	{
-		if (lCell->getY() < 0)
-			lCell = &lCell->getSouth();
-		else
+		if (lCell->getY() > 0)
 			lCell = &lCell->getNorth();
+		else
+			lCell = &lCell->getSouth();
 	}
 
 	fOrigin = lCell;
 
-	// Get MinX
-	while (lCell->hasWest())
-		lCell = &lCell->getWest();
-	fMinX = lCell->getX();
-
-	// Get MaxX
+	// Get Min/Max
+	// MinX
 	while (lCell->hasEast())
 		lCell = &lCell->getEast();
 	fMaxX = lCell->getX();
 
-	// Get MinY
-	while (lCell->hasSouth())
-		lCell = &lCell->getSouth();
-	fMaxY = lCell->getY();
+	while (lCell->hasWest())
+		lCell = &lCell->getWest();
+	fMinX = lCell->getX();
 
-	// Get MaxY
 	while (lCell->hasNorth())
 		lCell = &lCell->getNorth();
 	fMinY = lCell->getY();
+
+	while (lCell->hasSouth())
+		lCell = &lCell->getSouth();
+	fMaxY = lCell->getY();
 }
 
 template<class T>
-void Grid<T>::setCellValue(int aX, int aY, const T & aValue)
+inline Cell<T> & Grid<T>::getCell(int aX, int aY)
 {
-	// Get Cell
-	Cell<T> * lCell = fOrigin;
+	if (aX > fMaxX)
+		throw std::range_error("Error: X value greater than Max");
+	if (aX < fMinX)
+		throw std::range_error("Error: X value less than Min");
+	if (aY > fMaxY)
+		throw std::range_error("Error: Y value greater than Max");
+	if (aY < fMinY)
+		throw std::range_error("Error: Y value less than Min");
 
-	// Set Got
-	lCell->setValue(aValue);
-}
-
-template<class T>
-const Cell<T>& Grid<T>::getCell(int aX, int aY) const
-{
-	// Check Cell is in range
-	if (aX < fMinX || aX > fMaxX)
-		throw std::out_of_range("X coordinate out of range.");
-	if (aY < fMinY || aY > fMaxY)
-		throw std::out_of_range("Y coordinate out of range.");
-
-	// Navigate to Cell
-	const Cell<T> * lCell = (Cell<T>*)fOrigin;
+ 	Cell<T>* lCell = fOrigin;
 	while (lCell->getX() != aX)
 	{
 		if (lCell->getX() > aX)
@@ -117,53 +103,59 @@ const Cell<T>& Grid<T>::getCell(int aX, int aY) const
 
 	while (lCell->getY() != aY)
 	{
-		if (lCell->getY() < aY)
-			lCell = &lCell->getSouth();
-		else
+		if (lCell->getY() > aY)
 			lCell = &lCell->getNorth();
+		else
+			lCell = &lCell->getSouth();
 	}
 
 	return *lCell;
 }
 
 template<class T>
-const T & Grid<T>::getCellValue(int aX, int aY) const
+inline T & Grid<T>::getCellValue(int aX, int aY)
 {
 	return getCell(aX, aY).getValue();
 }
 
 template<class T>
-const int Grid<T>::getMinX() const
+inline int Grid<T>::getMinX()
 {
 	return fMinX;
 }
 
 template<class T>
-const int Grid<T>::getMaxX() const
+inline int Grid<T>::getMaxX()
 {
 	return fMaxX;
 }
 
 template<class T>
-const int Grid<T>::getMinY() const
+inline int Grid<T>::getMinY()
 {
 	return fMinY;
 }
 
 template<class T>
-const int Grid<T>::getMaxY() const
+inline int Grid<T>::getMaxY()
 {
 	return fMaxY;
 }
 
 template<class T>
-const int Grid<T>::getWitdh() const
+inline int Grid<T>::getWidth()
 {
-	return (fMaxX - fMinX) + 1;
+	return std::abs(fMaxX - fMinX) + 1;
 }
 
 template<class T>
-const int Grid<T>::getHeight() const
+inline int Grid<T>::getHeight()
 {
-	return (fMaxY - fMinY) + 1;
+	return std::abs(fMaxY - fMinY) + 1;
+}
+
+template<class T>
+inline void Grid<T>::setCellValue(T & aValue, int aX, int aY)
+{
+	getCell(aX, aY).setValue(aValue);
 }

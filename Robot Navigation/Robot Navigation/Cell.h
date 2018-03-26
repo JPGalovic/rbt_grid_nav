@@ -20,6 +20,7 @@ public:
 
 	void setValue(T & aValue);
 	
+	// Connection Setters
 	void setNorth(Cell<T> & aCell);
 	void setSouth(Cell<T> & aCell);
 	void setEast(Cell<T> & aCell);
@@ -27,9 +28,9 @@ public:
 
 	void remove();
 
-
 	T & getValue();
 	
+	// Get Connections
 	Cell<T> & getNorth();
 	Cell<T> & getSouth();
 	Cell<T> & getEast();

@@ -1,8 +1,3 @@
-﻿  Main.cpp
-b:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\grid.h(39): error C2244: 'Grid<T>::Grid': unable to match function definition to an existing declaration
-  b:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\grid.h(38): note: see declaration of 'Grid<T>::Grid'
-  b:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\grid.h(39): note: definition
-  b:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\grid.h(39): note: 'Grid<T>::Grid(Cell<T> &)'
-  b:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\grid.h(39): note: existing declarations
-  b:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\grid.h(39): note: 'Grid<T>::Grid(const Cell<T> &)'
-  b:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\grid.h(39): note: 'Grid<T>::Grid(void)'
+﻿  Agent.cpp
+  Robot Navigation.vcxproj -> B:\GitScratch\rbt_grid_nav\Robot Navigation\Debug\Robot Navigation.exe
+  Robot Navigation.vcxproj -> B:\GitScratch\rbt_grid_nav\Robot Navigation\Debug\Robot Navigation.pdb (Partial PDB)

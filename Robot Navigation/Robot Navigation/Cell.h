@@ -5,12 +5,13 @@
  * @author J.P.Galovic
  * @date March 2018
  */
+#include "Coordinate.h";
 
 template<class T>
 class Cell
 {
 private:
-	int fX, fY; // Coordinates of Cell, used to determine Origin (0,0) as well as dertermining if accessed cell is correct cell
+	Coordinate fCoordinate; // Coordinates of Cell, used to determine Origin (0,0) as well as dertermining if accessed cell is correct cell
 	Cell<T> * fNorth; Cell<T> * fSouth; Cell<T> * fEast; Cell<T> * fWest; // Pointers to adjacent Cells
 	T fValue; // Value of Cell
 
@@ -39,6 +40,8 @@ public:
 	int getX();
 	int getY();
 
+	Coordinate getCoordinate();
+
 	bool hasNorth();
 	bool hasSouth();
 	bool hasEast();
@@ -48,7 +51,7 @@ public:
 template<class T>
 inline Cell<T>::Cell()
 {
-	fX = 0; fY = 0;
+	fCoordinate = Coordinate(0, 0);
 	fNorth = nullptr; fSouth = nullptr; fEast = nullptr; fWest = nullptr;
 	fValue = T();
 }
@@ -56,7 +59,7 @@ inline Cell<T>::Cell()
 template<class T>
 inline Cell<T>::Cell(T & aValue, int aX, int aY)
 {
-	fX = aX; fY = aY;
+	fCoordinate = Coordinate(aX, aY);
 	fNorth = nullptr; fSouth = nullptr; fEast = nullptr; fWest = nullptr;
 	fValue = aValue;
 }
@@ -133,13 +136,19 @@ inline Cell<T> & Cell<T>::getWest()
 template<class T>
 inline int Cell<T>::getX()
 {
-	return fX;
+	return fCoordinate.getX();
 }
 
 template<class T>
 inline int Cell<T>::getY()
 {
-	return fY;
+	return fCoordinate.getY();
+}
+
+template<class T>
+inline Coordinate Cell<T>::getCoordinate()
+{
+	return fCoordinate;
 }
 
 template<class T>

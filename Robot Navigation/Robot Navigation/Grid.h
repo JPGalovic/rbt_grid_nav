@@ -8,10 +8,12 @@
 
 
 #include "Cell.h"
+#include "List.h"
 
 #include <string>
 #include <stdexcept>
 #include <cstdlib>
+#include <iostream>
 
 template<class T>
 class Grid
@@ -22,8 +24,10 @@ private:
 
 public:
 	Grid(Cell<T> & aOrigin); // Construct Grid from Cell
+	Grid(T & aInitalValue, int aWidth, int aHeight); // Construct Grid from a Width, Height and Inital Value
 
 	Cell<T> & getCell(int aX, int aY);
+	Cell<T> & getCell(Coordinate & aCoordinate);
 
 	T & getCellValue(int aX, int aY);
 	
@@ -43,6 +47,70 @@ inline Grid<T>::Grid(Cell<T>& aOrigin)
 {
 	// Traverse to Origin (0,0)
 	Cell<T>* lCell = &aOrigin;
+	while (lCell->getX() != 0)
+	{
+		if (lCell->getX() > 0)
+			lCell = &lCell->getWest();
+		else
+			lCell = &lCell->getEast();
+	}
+
+	while (lCell->getY() != 0)
+	{
+		if (lCell->getY() > 0)
+			lCell = &lCell->getNorth();
+		else
+			lCell = &lCell->getSouth();
+	}
+
+	fOrigin = lCell;
+
+	// Get Min/Max
+	// MinX
+	while (lCell->hasEast())
+		lCell = &lCell->getEast();
+	fMaxX = lCell->getX();
+
+	while (lCell->hasWest())
+		lCell = &lCell->getWest();
+	fMinX = lCell->getX();
+
+	while (lCell->hasNorth())
+		lCell = &lCell->getNorth();
+	fMinY = lCell->getY();
+
+	while (lCell->hasSouth())
+		lCell = &lCell->getSouth();
+	fMaxY = lCell->getY();
+}
+
+template<class T>
+inline Grid<T>::Grid(T & aInitalValue, int aWidth, int aHeight)
+{
+	Cell<T>** lCellGrid;
+	lCellGrid = new Cell<T>*[aWidth];
+	for (int i = 0; i<aWidth; i++)
+		lCellGrid[i] = new Cell<T>[aHeight];
+
+	for (int j = 0; j < aHeight; j++)
+	{
+		for (int i = 0; i < aWidth; i++)
+		{
+			std::cout << "Setup Cell: (" << i << "," << j << ")" << std::endl;
+
+			lCellGrid[i][j] = Cell<T>(aInitalValue, i, j);
+
+			if (i > 0)
+				lCellGrid[i][j].setWest(lCellGrid[i - 1][j]);
+
+			if (j > 0)
+				lCellGrid[i][j].setNorth(lCellGrid[i][j - 1]);
+		}
+	}
+
+	// Traverse to Origin (0,0)
+	Cell<T>* lCell = &lCellGrid[0][0];
+
 	while (lCell->getX() != 0)
 	{
 		if (lCell->getX() > 0)
@@ -110,6 +178,12 @@ inline Cell<T> & Grid<T>::getCell(int aX, int aY)
 	}
 
 	return *lCell;
+}
+
+template<class T>
+inline Cell<T>& Grid<T>::getCell(Coordinate & aCoordinate)
+{
+	return getCell(aCoordinate.getX(), aCoordinate.getY());
 }
 
 template<class T>

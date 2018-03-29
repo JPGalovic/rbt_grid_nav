@@ -46,6 +46,44 @@ void printGrid(Grid<std::string> & aGrid, Agent & aAgent)
 	SetConsoleTextAttribute(hConsole, 15);
 }
 
+void printGrid(Grid<int> & aGrid)
+{
+	// Print Grid
+	system("CLS");
+	std::cout << "Grid Size: [" << aGrid.getWidth() << "," << aGrid.getHeight() << "]" << std::endl;
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	for (int j = 0; j < aGrid.getHeight(); j++)
+	{
+		for (int i = 0; i < aGrid.getWidth(); i++)
+		{
+			std::cout << " " << aGrid.getCell(i, j).getValue();
+		}
+		std::cout << std::endl;
+	}
+	std::cout << std::endl;
+	SetConsoleTextAttribute(hConsole, 15);
+}
+
+void printGrid(Grid<std::string> & aGrid)
+{
+	// Print Grid
+	system("CLS");
+	std::cout << "Grid Size: [" << aGrid.getWidth() << "," << aGrid.getHeight() << "]" << std::endl;
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	for (int j = 0; j < aGrid.getHeight(); j++)
+	{
+		for (int i = 0; i < aGrid.getWidth(); i++)
+		{
+			std::cout << " " << aGrid.getCell(i, j).getValue();
+		}
+		std::cout << std::endl;
+	}
+	std::cout << std::endl;
+	SetConsoleTextAttribute(hConsole, 15);
+}
+
 
 int main(int argc, char** argv)
 {
@@ -78,7 +116,7 @@ int main(int argc, char** argv)
 	SetConsoleTextAttribute(hConsole, 15);
 	std::cout << std::endl << "Grid Setup" << std::endl;
 
-	system("PAUSE");
+	
 
 	Grid<std::string> lGrid(lCellGrid[0][0]);
 
@@ -94,7 +132,15 @@ int main(int argc, char** argv)
 	Agent lAgent(0, 1);
 	lAgent.setGoal(10, 3);
 
+	system("PAUSE");
+
 	printGrid(lGrid, lAgent);
+
+	system("PAUSE");
+
+	Grid<int> lGValues = lAgent.AS(lGrid);
+
+	printGrid(lGValues);
 
 	while (!lAgent.atGoal())
 	{

@@ -11,10 +11,9 @@
 class Agent
 {
 private:
-	int fX;
-	int fY;
-	int fGoalX;
-	int fGoalY;
+	Coordinate fStart;
+	Coordinate fLocation;
+	Coordinate fGoal;
 
 public:
 	Agent();
@@ -43,7 +42,8 @@ public:
 	//int BFS(Grid<std::string> aGrid);
 
 	//int GBFS(Grid<std::string> aGrid);
-	int AS(Grid<std::string> & aGrid);
+	Grid<int> AS(Grid<std::string> & aGrid);
+	int heuristicCostEstimate(Grid<std::string> aGrid, Coordinate aFrom, Coordinate aTo);
 
 	//int US(Grid<std::string> aGrid);
 	//int IS(Grid<std::string> aGrid);

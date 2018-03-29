@@ -112,12 +112,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Agent.cpp" />
+    <ClCompile Include="Coordinate.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Agent.h" />
     <ClInclude Include="Cell.h" />
+    <ClInclude Include="Coordinate.h" />
     <ClInclude Include="Grid.h" />
+    <ClInclude Include="List.h" />
+    <ClInclude Include="ListNode.h" />
+    <ClInclude Include="ListNodeIter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

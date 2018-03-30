@@ -1,4 +1,5 @@
 #include "Agent.h"
+#include "GridPrinters.h"
 
 #include <iostream>
 #include <string>
@@ -10,80 +11,6 @@ void setWall(Grid<std::string> & aCellGrid, int aX, int aY, int aW, int aH)
 		for (int i = 0; i < aW; i++)
 			aCellGrid.setCellValue(std::string("WAL"), aX + i, aY + j);
 }
-
-void printGrid(Grid<std::string> & aGrid, Agent & aAgent)
-{
-	// Print Grid
-	system("CLS");
-	std::cout << "Grid Size: [" << aGrid.getWidth() << "," << aGrid.getHeight() << "]" << std::endl;
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-
-	for (int j = 0; j < aGrid.getHeight(); j++)
-	{
-		for (int i = 0; i < aGrid.getWidth(); i++)
-		{
-			if (aAgent.isAt(i, j))
-			{
-				SetConsoleTextAttribute(hConsole, 11);
-				std::cout << " " << "AGT";
-				continue;
-			}
-			if (aAgent.goalAt(i, j))
-			{
-				SetConsoleTextAttribute(hConsole, 14);
-				std::cout << " " << "GOL";
-				continue;
-			}
-			if (aGrid.getCell(i, j).getValue() == "CLR")
-				SetConsoleTextAttribute(hConsole, 10);
-			if (aGrid.getCell(i, j).getValue() == "WAL")
-				SetConsoleTextAttribute(hConsole, 12);
-			std::cout << " " << aGrid.getCell(i, j).getValue();
-		}
-		std::cout << std::endl;
-	}
-	std::cout << std::endl;
-	SetConsoleTextAttribute(hConsole, 15);
-}
-
-void printGrid(Grid<int> & aGrid)
-{
-	// Print Grid
-	system("CLS");
-	std::cout << "Grid Size: [" << aGrid.getWidth() << "," << aGrid.getHeight() << "]" << std::endl;
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-
-	for (int j = 0; j < aGrid.getHeight(); j++)
-	{
-		for (int i = 0; i < aGrid.getWidth(); i++)
-		{
-			std::cout << " " << aGrid.getCell(i, j).getValue();
-		}
-		std::cout << std::endl;
-	}
-	std::cout << std::endl;
-	SetConsoleTextAttribute(hConsole, 15);
-}
-
-void printGrid(Grid<std::string> & aGrid)
-{
-	// Print Grid
-	system("CLS");
-	std::cout << "Grid Size: [" << aGrid.getWidth() << "," << aGrid.getHeight() << "]" << std::endl;
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-
-	for (int j = 0; j < aGrid.getHeight(); j++)
-	{
-		for (int i = 0; i < aGrid.getWidth(); i++)
-		{
-			std::cout << " " << aGrid.getCell(i, j).getValue();
-		}
-		std::cout << std::endl;
-	}
-	std::cout << std::endl;
-	SetConsoleTextAttribute(hConsole, 15);
-}
-
 
 int main(int argc, char** argv)
 {
@@ -131,46 +58,12 @@ int main(int argc, char** argv)
 
 	Agent lAgent(0, 1);
 	lAgent.setGoal(10, 3);
-
 	system("PAUSE");
 
 	printGrid(lGrid, lAgent);
-
 	system("PAUSE");
 
-	Grid<int> lGValues = lAgent.AS(lGrid);
-
-	printGrid(lGValues);
-
-	while (!lAgent.atGoal())
-	{
-		char lDirection;
-		std::cout << "What Direction should the Agent Move? ";
-		std::cin >> lDirection;
-
-		switch (lDirection)
-		{
-		case 'n':
-			lAgent.moveNorth(lGrid.getCell(lAgent.getX(), lAgent.getY()).getNorth());
-			break;
-
-		case 's':
-			lAgent.moveSouth(lGrid.getCell(lAgent.getX(), lAgent.getY()).getSouth());
-			break;
-
-		case 'e':
-			lAgent.moveEast(lGrid.getCell(lAgent.getX(), lAgent.getY()).getEast());
-			break;
-
-		case 'w':
-			lAgent.moveWest(lGrid.getCell(lAgent.getX(), lAgent.getY()).getWest());
-			break;
-		}
-
-		printGrid(lGrid, lAgent);
-	}
-
-	std::cout << "At Goal" << std::endl;
+	lAgent.AS(lGrid);
 
 	system("PAUSE");
 	return 0;

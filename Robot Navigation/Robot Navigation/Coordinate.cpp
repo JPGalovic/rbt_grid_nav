@@ -48,3 +48,8 @@ bool Coordinate::operator==(Coordinate & aOther)
 {
 	return fX == aOther.fX && fY == aOther.fY;
 }
+
+bool Coordinate::operator!=(Coordinate & aOther)
+{
+	return !(*this == aOther);
+}

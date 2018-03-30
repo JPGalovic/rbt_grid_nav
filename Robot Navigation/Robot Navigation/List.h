@@ -186,12 +186,12 @@ inline T & List<T>::operator[](unsigned int aIndex)
 template<class T>
 inline bool List<T>::hasValue(T & aValue)
 {
-	if (empty())
-		return false;
-	for (ListNodeIter<T> iter = getIter().first(); iter != iter.rightEnd(); iter++)
-		if (*iter == aValue)
-			return true;
-	return false;
+	bool result = false;
+	if(!empty())
+		for (ListNodeIter<T> iter = getIter().first(); iter != iter.rightEnd(); iter++)
+			if (*iter == aValue)
+				result = true;
+	return result;
 }
 
 template<class T>

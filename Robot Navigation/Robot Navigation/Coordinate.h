@@ -24,4 +24,5 @@ public:
 	void setY(int aY);
 
 	bool operator==(Coordinate & aOther);
+	bool operator!=(Coordinate & aOther);
 };

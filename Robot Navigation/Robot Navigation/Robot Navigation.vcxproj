@@ -113,6 +113,7 @@
   <ItemGroup>
     <ClCompile Include="Agent.cpp" />
     <ClCompile Include="Coordinate.cpp" />
+    <ClCompile Include="GridPrinters.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -120,6 +121,7 @@
     <ClInclude Include="Cell.h" />
     <ClInclude Include="Coordinate.h" />
     <ClInclude Include="Grid.h" />
+    <ClInclude Include="GridPrinters.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="ListNode.h" />
     <ClInclude Include="ListNodeIter.h" />

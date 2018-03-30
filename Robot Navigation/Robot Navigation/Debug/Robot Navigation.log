@@ -1,9 +1,8 @@
-﻿  Agent.cpp
+﻿  Main.cpp
 b:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\cell.h(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-b:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\agent.cpp(273): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
-b:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\list.h(175): warning C4018: '>=': signed/unsigned mismatch
-  b:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\list.h(174): note: while compiling class template member function 'Coordinate &List<Coordinate>::operator [](unsigned int)'
-  b:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\agent.cpp(141): note: see reference to function template instantiation 'Coordinate &List<Coordinate>::operator [](unsigned int)' being compiled
-  b:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\agent.cpp(114): note: see reference to class template instantiation 'List<Coordinate>' being compiled
+  GridPrinters.cpp
+b:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\cell.h(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Coordinate.cpp
+  Generating Code...
   Robot Navigation.vcxproj -> B:\GitScratch\rbt_grid_nav\Robot Navigation\Debug\Robot Navigation.exe
   Robot Navigation.vcxproj -> B:\GitScratch\rbt_grid_nav\Robot Navigation\Debug\Robot Navigation.pdb (Partial PDB)

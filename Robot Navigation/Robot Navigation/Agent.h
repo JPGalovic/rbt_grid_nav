@@ -42,7 +42,8 @@ public:
 	//int BFS(Grid<std::string> aGrid);
 
 	//int GBFS(Grid<std::string> aGrid);
-	Grid<int> AS(Grid<std::string> & aGrid);
+	bool AS(Grid<std::string> & aGrid);
+	bool ASMove(Grid<std::string> & aGrid, Grid<int> aFScore, int aLifeTime);
 	int heuristicCostEstimate(Grid<std::string> aGrid, Coordinate aFrom, Coordinate aTo);
 
 	//int US(Grid<std::string> aGrid);

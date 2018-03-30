@@ -51,13 +51,13 @@ inline void ListNode<T>::prepend(ListNode & aNode)
 		fPrevious->fNext = &aNode;
 	}
 
-	fNext = &aNode;
+	fPrevious = &aNode;
 }
 
 template<class T>
 inline void ListNode<T>::append(ListNode & aNode)
 {
-	aNode.fNext = this;
+	aNode.fPrevious = this;
 
 	if (fNext != nullptr)
 	{
@@ -65,7 +65,7 @@ inline void ListNode<T>::append(ListNode & aNode)
 		fNext->fPrevious = &aNode;
 	}
 
-	fPrevious = &aNode;
+	fNext = &aNode;
 }
 
 template<class T>

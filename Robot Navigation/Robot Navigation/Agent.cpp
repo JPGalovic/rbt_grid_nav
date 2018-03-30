@@ -1,6 +1,7 @@
 #include "Agent.h"
 #include "Coordinate.h"
 #include "List.h"
+#include "GridPrinters.h"
 
 #include <limits>
 
@@ -13,7 +14,7 @@ Agent::Agent()
 
 Agent::Agent(int aX, int aY)
 {
-	fStart = Coordinate(aX, aX);
+	fStart = Coordinate(aX, aY);
 	fLocation = Coordinate(aX, aY);
 	fGoal = Coordinate(0, 0);
 }
@@ -104,7 +105,7 @@ bool Agent::goalAt(int aX, int aY)
  * @date MAR18
  * @author J.P.Galovic
  */
-Grid<int> Agent::AS(Grid<std::string> & aGrid)
+bool Agent::AS(Grid<std::string> & aGrid)
 {
 	// Get width and height of grid
 	int lHeight = aGrid.getHeight();
@@ -155,7 +156,12 @@ Grid<int> Agent::AS(Grid<std::string> & aGrid)
 		}
 
 		if (lCurrent->getCoordinate() == fGoal)
-			return lGScore; //TODO: run path?
+		{
+			printGrid(lFScore);
+			system("PAUSE");
+			return ASMove(aGrid, lFScore, 1000);
+		}
+			
 
 		// Move current to Closed Set
 		lOpenSet.remove(lCurrent->getCoordinate());
@@ -163,112 +169,157 @@ Grid<int> Agent::AS(Grid<std::string> & aGrid)
 
 		for (int i = 0; i < 4; i++)
 		{
-			Cell<std::string>* lDirection;
+			Cell<std::string>* lDirection = lCurrent;
 			switch (i)
 			{
 			case 0:
 				if (lCurrent->hasNorth())
-				{
 					lDirection = &lCurrent->getNorth();
-					if (lClosedSet.hasValue(lDirection->getCoordinate())) // alredy addressed continue to next direction
-						break;
-					if (!lOpenSet.hasValue(lDirection->getCoordinate())) // descovery of new node, add it to the open set to be checked.
-						lOpenSet.add(lDirection->getCoordinate());
-
-					// get distance from start to North;
-					int lTemp_GScore = lGScore.getCell(lCurrent->getCoordinate()).getValue() + 1;
-					if (lTemp_GScore >= lGScore.getCell(lDirection->getCoordinate()).getValue()) // Not a better path to North
-						break;
-
-					// path is better, record it.
-					lCameFrom.getCell(lDirection->getCoordinate()).setValue(lCurrent->getCoordinate());
-					lGScore.getCell(lDirection->getCoordinate()).setValue(lTemp_GScore);
-					int lTemp_FScore = lTemp_GScore + heuristicCostEstimate(aGrid, lDirection->getCoordinate(), fGoal);
-					lFScore.getCell(lDirection->getCoordinate()).setValue(lTemp_FScore);
-				}
 				break;
 			case 1:
 				if (lCurrent->hasSouth())
-				{
 					lDirection = &lCurrent->getSouth();
-					if (lClosedSet.hasValue(lDirection->getCoordinate())) // alredy addressed continue to next direction
-						break;
-					if (!lOpenSet.hasValue(lDirection->getCoordinate())) // descovery of new node, add it to the open set to be checked.
-						lOpenSet.add(lDirection->getCoordinate());
-
-					// get distance from start to North;
-					int lTemp_GScore = lGScore.getCell(lCurrent->getCoordinate()).getValue() + 1;
-					if (lTemp_GScore >= lGScore.getCell(lDirection->getCoordinate()).getValue()) // Not a better path to North
-						break;
-
-					// path is better, record it.
-					lCameFrom.getCell(lDirection->getCoordinate()).setValue(lCurrent->getCoordinate());
-					lGScore.getCell(lDirection->getCoordinate()).setValue(lTemp_GScore);
-					int lTemp_FScore = lTemp_GScore + heuristicCostEstimate(aGrid, lDirection->getCoordinate(), fGoal);
-					lFScore.getCell(lDirection->getCoordinate()).setValue(lTemp_FScore);
-				}
 				break;
 			case 2:
 				if (lCurrent->hasEast())
-				{
 					lDirection = &lCurrent->getEast();
-					if (lClosedSet.hasValue(lDirection->getCoordinate())) // alredy addressed continue to next direction
-						break;
-					if (!lOpenSet.hasValue(lDirection->getCoordinate())) // descovery of new node, add it to the open set to be checked.
-						lOpenSet.add(lDirection->getCoordinate());
-
-					// get distance from start to North;
-					int lTemp_GScore = lGScore.getCell(lCurrent->getCoordinate()).getValue() + 1;
-					if (lTemp_GScore >= lGScore.getCell(lDirection->getCoordinate()).getValue()) // Not a better path to North
-						break;
-
-					// path is better, record it.
-					lCameFrom.getCell(lDirection->getCoordinate()).setValue(lCurrent->getCoordinate());
-					lGScore.getCell(lDirection->getCoordinate()).setValue(lTemp_GScore);
-					int lTemp_FScore = lTemp_GScore + heuristicCostEstimate(aGrid, lDirection->getCoordinate(), fGoal);
-					lFScore.getCell(lDirection->getCoordinate()).setValue(lTemp_FScore);
-				}
 				break;
 			case 3:
 				if (lCurrent->hasWest())
-				{
-					lDirection = &lCurrent->getWest();
-
-					if (lClosedSet.hasValue(lDirection->getCoordinate())) // alredy addressed continue to next direction
-						break;
-					if (!lOpenSet.hasValue(lDirection->getCoordinate())) // descovery of new node, add it to the open set to be checked.
-						lOpenSet.add(lDirection->getCoordinate());
-
-					// get distance from start to North;
-					int lTemp_GScore = lGScore.getCell(lCurrent->getCoordinate()).getValue() + 1;
-					if (lTemp_GScore >= lGScore.getCell(lDirection->getCoordinate()).getValue()) // Not a better path to North
-						break;
-
-					// path is better, record it.
-					lCameFrom.getCell(lDirection->getCoordinate()).setValue(lCurrent->getCoordinate());
-					lGScore.getCell(lDirection->getCoordinate()).setValue(lTemp_GScore);
-					int lTemp_FScore = lTemp_GScore + heuristicCostEstimate(aGrid, lDirection->getCoordinate(), fGoal);
-					lFScore.getCell(lDirection->getCoordinate()).setValue(lTemp_FScore);
-				}
-					
+					lDirection = &lCurrent->getWest();	
 				break;
 			default:
 				break;
 			}
+			if (!lClosedSet.hasValue(lDirection->getCoordinate())) // alredy addressed continue to next direction
+			{
+				if (!lOpenSet.hasValue(lDirection->getCoordinate())) // descovery of new node, add it to the open set to be checked.
+					lOpenSet.add(lDirection->getCoordinate());
+
+				// get distance from start to direction;
+				int lTemp_GScore = lGScore.getCell(lCurrent->getCoordinate()).getValue() + 1;
+				if (lTemp_GScore < lGScore.getCell(lDirection->getCoordinate()).getValue()) // check if path is better
+				{
+					// path is better, record it.
+					lCameFrom.getCell(lDirection->getCoordinate()).setValue(lCurrent->getCoordinate());
+					lGScore.getCell(lDirection->getCoordinate()).setValue(lTemp_GScore);
+					int lTemp_FScore = heuristicCostEstimate(aGrid, lDirection->getCoordinate(), fGoal);
+					if (lTemp_FScore != std::numeric_limits<int>::max())
+						lTemp_FScore += lTemp_GScore;
+					lFScore.getCell(lDirection->getCoordinate()).setValue(lTemp_FScore);
+				}
+			}
 		}
 	}
-	// Failure to path
-	return lFScore;
+	// Failure to path find path
+	return false;
+}
+
+/**
+ * AS Move, runs movements of AS Alogrithem, North Movement Bias.
+ */
+bool Agent::ASMove(Grid<std::string>& aGrid, Grid<int> aFScore, int aLifeTime)
+{
+	enum Cardinal { NORTH, EAST, SOUTH, WEST};
+	
+	for (int j = 0; j < aLifeTime; j++)
+	{
+		Cardinal lDirectionToCheck;
+		Cardinal lDirectionToMove = NORTH;
+		int lCostToMove = std::numeric_limits<int>::max();
+
+		// Check if at goal
+		if (atGoal())
+		{
+			std::cout << "At Goal" << std::endl;
+			return true;
+		}
+
+		// Determine what direction to move
+		for (int i = 0; i < 4; i++)
+		{
+			switch (i)
+			{
+			case 0:
+				if (aGrid.getCell(fLocation).hasNorth())
+					lDirectionToCheck = NORTH;
+				break;
+			case 1:
+				if (aGrid.getCell(fLocation).hasEast())
+					lDirectionToCheck = EAST;
+				break;
+			case 2:
+				if (aGrid.getCell(fLocation).hasSouth())
+					lDirectionToCheck = SOUTH;
+				break;
+			case 3:
+				if (aGrid.getCell(fLocation).hasWest())
+					lDirectionToCheck = WEST;
+				break;
+			default:
+				continue;
+			}
+
+			int lCost = std::numeric_limits<int>::max();
+
+			switch (lDirectionToCheck)
+			{
+			case NORTH:
+				lCost = aFScore.getCell(fLocation).getNorth().getValue();
+				break;
+			case EAST:
+				lCost = aFScore.getCell(fLocation).getEast().getValue();
+				break;
+			case SOUTH:
+				lCost = aFScore.getCell(fLocation).getSouth().getValue();
+				break;
+			case WEST:
+				lCost = aFScore.getCell(fLocation).getWest().getValue();
+				break;
+			}
+
+			if (lCost < lCostToMove)
+			{
+				lDirectionToMove = lDirectionToCheck;
+				lCostToMove = lCost;
+			}
+		}
+
+		// Move
+		switch (lDirectionToMove)
+		{
+		case NORTH:
+			moveNorth(aGrid.getCell(fLocation).getNorth());
+			break;
+		case EAST:
+			moveEast(aGrid.getCell(fLocation).getEast());
+			break;
+		case SOUTH:
+			moveSouth(aGrid.getCell(fLocation).getSouth());
+			break;
+		case WEST:
+			moveWest(aGrid.getCell(fLocation).getWest());
+			break;
+		default:
+			break;
+		}
+
+		// print Grid Graphic
+		printGrid(aGrid, *this);
+		system("PAUSE");
+	}
+	return false;
 }
 
 int Agent::heuristicCostEstimate(Grid<std::string> aGrid, Coordinate aFrom, Coordinate aTo)
 {
-	// If to is "Wall" then return infinity.
-	if (aGrid.getCell(aTo).getValue() == "WAL")
+	if (aGrid.getCell(aFrom).getValue() == "WAL")
 		return std::numeric_limits<int>::max();
 
-	// return "as the crow flys distance between
-	int lXDist = std::abs(aTo.getX() - aFrom.getX());
-	int lYDist = std::abs(aTo.getY() - aFrom.getY());
-	return std::sqrt((lXDist * lXDist) + (lYDist * lYDist));
+	// Calculate Distance Heuristic
+	int lXDist = std::abs(aFrom.getX() - aTo.getX());
+	int lYDist = std::abs(aFrom.getY() - aTo.getY());
+	int lManhattan = lXDist + lYDist;
+	int lEuclidian = std::sqrt((lXDist * lXDist) + (lYDist * lYDist));
+	return lManhattan + lEuclidian;
 }

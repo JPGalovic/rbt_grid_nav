@@ -4,6 +4,8 @@
 #include "GridPrinters.h"
 
 #include <limits>
+#include <chrono>
+#include <thread>
 
 Agent::Agent()
 {
@@ -17,6 +19,13 @@ Agent::Agent(int aX, int aY)
 	fStart = Coordinate(aX, aY);
 	fLocation = Coordinate(aX, aY);
 	fGoal = Coordinate(0, 0);
+}
+
+void Agent::setStart(int aX, int aY)
+{
+	fStart.setX(aX);
+	fStart.setY(aY);
+	gotoStart();
 }
 
 void Agent::setGoal(int aX, int aY)
@@ -43,6 +52,12 @@ int Agent::getGoalX()
 int Agent::getGoalY()
 {
 	return fGoal.getY();
+}
+
+void Agent::gotoStart()
+{
+	fLocation.setX(fStart.getX());
+	fLocation.setY(fStart.getY());
 }
 
 bool Agent::moveNorth(Cell<std::string>& aNorth)
@@ -157,11 +172,15 @@ bool Agent::AS(Grid<std::string> & aGrid)
 
 		if (lCurrent->getCoordinate() == fGoal)
 		{
-			printGrid(lFScore);
-			system("PAUSE");
-			return ASMove(aGrid, lFScore, 1000);
+			//printGrid(lGScore);
+			//system("PAUSE");
+			//printGrid(lFScore);
+			//system("PAUSE");
+			//printGrid(lCameFrom);
+			//system("PAUSE");
+			List<Coordinate> * lPath = rebuildPath(lCameFrom, lCurrent);
+			return ASMove(aGrid, lPath, 1000);
 		}
-			
 
 		// Move current to Closed Set
 		lOpenSet.remove(lCurrent->getCoordinate());
@@ -174,19 +193,23 @@ bool Agent::AS(Grid<std::string> & aGrid)
 			{
 			case 0:
 				if (lCurrent->hasNorth())
-					lDirection = &lCurrent->getNorth();
+					if (!(aGrid.getCell(lCurrent->getNorth().getCoordinate()).getValue() == "WAL"))
+						lDirection = &lCurrent->getNorth();
 				break;
 			case 1:
 				if (lCurrent->hasSouth())
-					lDirection = &lCurrent->getSouth();
+					if (!(aGrid.getCell(lCurrent->getSouth().getCoordinate()).getValue() == "WAL"))
+						lDirection = &lCurrent->getSouth();
 				break;
 			case 2:
 				if (lCurrent->hasEast())
-					lDirection = &lCurrent->getEast();
+					if (!(aGrid.getCell(lCurrent->getEast().getCoordinate()).getValue() == "WAL"))
+						lDirection = &lCurrent->getEast();
 				break;
 			case 3:
 				if (lCurrent->hasWest())
-					lDirection = &lCurrent->getWest();	
+					if (!(aGrid.getCell(lCurrent->getWest().getCoordinate()).getValue() == "WAL"))
+						lDirection = &lCurrent->getWest();	
 				break;
 			default:
 				break;
@@ -218,14 +241,14 @@ bool Agent::AS(Grid<std::string> & aGrid)
 /**
  * AS Move, runs movements of AS Alogrithem, North Movement Bias.
  */
-bool Agent::ASMove(Grid<std::string>& aGrid, Grid<int> aFScore, int aLifeTime)
+bool Agent::ASMove(Grid<std::string>& aGrid, List<Coordinate> * aPath, int aLifeTime)
 {
 	enum Cardinal { NORTH, EAST, SOUTH, WEST};
 	
 	for (int j = 0; j < aLifeTime; j++)
 	{
 		Cardinal lDirectionToCheck;
-		Cardinal lDirectionToMove = NORTH;
+		Cardinal lDirectionToMove;
 		int lCostToMove = std::numeric_limits<int>::max();
 
 		// Check if at goal
@@ -243,18 +266,26 @@ bool Agent::ASMove(Grid<std::string>& aGrid, Grid<int> aFScore, int aLifeTime)
 			case 0:
 				if (aGrid.getCell(fLocation).hasNorth())
 					lDirectionToCheck = NORTH;
+				else
+					continue;
 				break;
 			case 1:
 				if (aGrid.getCell(fLocation).hasEast())
 					lDirectionToCheck = EAST;
+				else
+					continue;
 				break;
 			case 2:
 				if (aGrid.getCell(fLocation).hasSouth())
 					lDirectionToCheck = SOUTH;
+				else
+					continue;
 				break;
 			case 3:
 				if (aGrid.getCell(fLocation).hasWest())
 					lDirectionToCheck = WEST;
+				else
+					continue;
 				break;
 			default:
 				continue;
@@ -265,23 +296,35 @@ bool Agent::ASMove(Grid<std::string>& aGrid, Grid<int> aFScore, int aLifeTime)
 			switch (lDirectionToCheck)
 			{
 			case NORTH:
-				lCost = aFScore.getCell(fLocation).getNorth().getValue();
+				if (aPath->get(0) == aGrid.getCell(fLocation).getNorth().getCoordinate())
+				{
+					lDirectionToMove = lDirectionToCheck;
+					aPath->remove(aPath->get(0));
+				}
 				break;
 			case EAST:
-				lCost = aFScore.getCell(fLocation).getEast().getValue();
+				if (aPath->get(0) == aGrid.getCell(fLocation).getEast().getCoordinate())
+				{
+					lDirectionToMove = lDirectionToCheck;
+					aPath->remove(aPath->get(0));
+				}
 				break;
 			case SOUTH:
-				lCost = aFScore.getCell(fLocation).getSouth().getValue();
+				if (aPath->get(0) == aGrid.getCell(fLocation).getSouth().getCoordinate())
+				{
+					lDirectionToMove = lDirectionToCheck;
+					aPath->remove(aPath->get(0));
+				}
 				break;
 			case WEST:
-				lCost = aFScore.getCell(fLocation).getWest().getValue();
+				if (aPath->get(0) == aGrid.getCell(fLocation).getWest().getCoordinate())
+				{
+					lDirectionToMove = lDirectionToCheck;
+					aPath->remove(aPath->get(0));
+				}
 				break;
-			}
-
-			if (lCost < lCostToMove)
-			{
-				lDirectionToMove = lDirectionToCheck;
-				lCostToMove = lCost;
+			default:
+				break;
 			}
 		}
 
@@ -306,7 +349,7 @@ bool Agent::ASMove(Grid<std::string>& aGrid, Grid<int> aFScore, int aLifeTime)
 
 		// print Grid Graphic
 		printGrid(aGrid, *this);
-		system("PAUSE");
+		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
 	return false;
 }
@@ -322,4 +365,22 @@ int Agent::heuristicCostEstimate(Grid<std::string> aGrid, Coordinate aFrom, Coor
 	int lManhattan = lXDist + lYDist;
 	int lEuclidian = std::sqrt((lXDist * lXDist) + (lYDist * lYDist));
 	return lManhattan + lEuclidian;
+}
+
+List<Coordinate> * Agent::rebuildPath(Grid<Coordinate>& aGrid, Cell<std::string>* aCurrent)
+{
+	List<Coordinate> lPath;
+	lPath.push_front(aCurrent->getCoordinate());
+
+	Coordinate lCurrent = aCurrent->getCoordinate();
+
+	while (lCurrent != fStart)
+	{
+		std::cout << "Pathing from: " << lCurrent.getX() << "," << lCurrent.getY();
+		lCurrent = aGrid.getCell(lCurrent).getValue();
+		std::cout << " to: " << lCurrent.getX() << "," << lCurrent.getY() << std::endl;
+		lPath.push_front(lCurrent);
+	}
+
+	return &lPath;
 }

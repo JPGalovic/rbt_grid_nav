@@ -23,6 +23,7 @@ private:
 	Cell<T> * fOrigin; // Origin of grid
 
 public:
+	Grid();
 	Grid(Cell<T> & aOrigin); // Construct Grid from Cell
 	Grid(T & aInitalValue, int aWidth, int aHeight); // Construct Grid from a Width, Height and Inital Value
 
@@ -41,6 +42,13 @@ public:
 
 	void setCellValue(T & aValue, int aX, int aY);
 };
+
+template<class T>
+inline Grid<T>::Grid()
+{
+	fMinX = 0; fMaxX = 0; fMinY = 0; fMaxY = 0;
+	fOrigin = nullptr;
+}
 
 template<class T>
 inline Grid<T>::Grid(Cell<T>& aOrigin)

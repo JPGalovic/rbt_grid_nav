@@ -56,6 +56,25 @@ void printGrid(Grid<int> & aGrid)
 	SetConsoleTextAttribute(hConsole, 15);
 }
 
+void printGrid(Grid<Coordinate> & aGrid)
+{
+	// Print Grid
+	system("CLS");
+	std::cout << "Grid Size: [" << aGrid.getWidth() << "," << aGrid.getHeight() << "]" << std::endl;
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	for (int j = 0; j < aGrid.getHeight(); j++)
+	{
+		for (int i = 0; i < aGrid.getWidth(); i++)
+		{
+			std::cout << " (" << aGrid.getCell(i, j).getValue().getX() << "," << aGrid.getCell(i, j).getValue().getY() << ")";
+		}
+		std::cout << std::endl;
+	}
+	std::cout << std::endl;
+	SetConsoleTextAttribute(hConsole, 15);
+}
+
 void printGrid(Grid<std::string> & aGrid)
 {
 	// Print Grid

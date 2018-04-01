@@ -32,6 +32,7 @@ public:
 	void remove(T & aElement);
 
 	T & operator[](unsigned int aIndex);
+	T & get(unsigned int aIndex);
 
 	bool hasValue(T & aValue);
 
@@ -171,6 +172,20 @@ inline void List<T>::remove(T & aElement)
 
 template<class T>
 inline T & List<T>::operator[](unsigned int aIndex)
+{
+	if (aIndex >= fCount)
+		throw std::range_error("Index out of range.");
+	ListNode<T>* lNode = fTop;
+	while (aIndex)
+	{
+		aIndex--;
+		lNode = (ListNode<T>*)&lNode->getNext();
+	}
+	return lNode->getValue();
+}
+
+template<class T>
+inline T & List<T>::get(unsigned int aIndex)
 {
 	if (aIndex >= fCount)
 		throw std::range_error("Index out of range.");

@@ -19,12 +19,15 @@ public:
 	Agent();
 	Agent(int aX, int aY);
 
+	void setStart(int aX, int aY);
 	void setGoal(int aX, int aY);
 
 	int getX();
 	int getY();
 	int getGoalX();
 	int getGoalY();
+
+	void gotoStart();
 
 	// Movement Processes
 	bool moveNorth(Cell<std::string>& aNorth);
@@ -43,8 +46,9 @@ public:
 
 	//int GBFS(Grid<std::string> aGrid);
 	bool AS(Grid<std::string> & aGrid);
-	bool ASMove(Grid<std::string> & aGrid, Grid<int> aFScore, int aLifeTime);
+	bool ASMove(Grid<std::string> & aGrid, List<Coordinate> * aPath, int aLifeTime);
 	int heuristicCostEstimate(Grid<std::string> aGrid, Coordinate aFrom, Coordinate aTo);
+	List<Coordinate> * rebuildPath(Grid<Coordinate> & aGrid, Cell<std::string>* aCurrent);
 
 	//int US(Grid<std::string> aGrid);
 	//int IS(Grid<std::string> aGrid);

@@ -7,4 +7,5 @@
 
 void printGrid(Grid<std::string> & aGrid, Agent & aAgent);
 void printGrid(Grid<std::string> & aGrid);
+void printGrid(Grid<Coordinate> & aGrid);
 void printGrid(Grid<int> & aGrid);

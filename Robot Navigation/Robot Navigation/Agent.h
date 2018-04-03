@@ -7,6 +7,7 @@
  */
 
 #include"Grid.h"
+#include"Cardinal.h"
 
 class Agent
 {
@@ -34,6 +35,7 @@ public:
 	bool moveSouth(Cell<std::string>& aSouth);
 	bool moveEast(Cell<std::string>& aEast);
 	bool moveWest(Cell<std::string>& aWest);
+	bool move(Cardinal aDirection, Cell<std::string> & aCurrent);
 
 	// Goal Checking
 	bool atGoal();
@@ -41,15 +43,5 @@ public:
 	bool goalAt(int aX, int aY);
 
 	// AI Algorithems
-	//int DFS(Grid<std::string> aGrid);
-	//int BFS(Grid<std::string> aGrid);
-
-	//int GBFS(Grid<std::string> aGrid);
-	bool AS(Grid<std::string> & aGrid);
-	bool ASMove(Grid<std::string> & aGrid, List<Coordinate> * aPath, int aLifeTime);
-	int heuristicCostEstimate(Grid<std::string> aGrid, Coordinate aFrom, Coordinate aTo);
-	List<Coordinate> * rebuildPath(Grid<Coordinate> & aGrid, Cell<std::string>* aCurrent);
-
-	//int US(Grid<std::string> aGrid);
-	//int IS(Grid<std::string> aGrid);
+	bool ASMove(Grid<std::string> & aGrid);
 };

@@ -19,6 +19,8 @@ int main(int argc, char** argv)
 	std::ifstream lInputFile;
 	std::string lLine;
 
+
+	// Run Search
 	lInputFile.open(argv[1], std::ios::in);
 	if (!lInputFile)
 	{
@@ -98,7 +100,7 @@ int main(int argc, char** argv)
 	printGrid(lGrid, lAgent);
 	system("PAUSE");
 
-	lAgent.AS(lGrid);
+	lAgent.ASMove(lGrid);
 
 	system("PAUSE");
 	return 0;

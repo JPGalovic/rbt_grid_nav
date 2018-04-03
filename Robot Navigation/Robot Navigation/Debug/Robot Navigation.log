@@ -1,20 +1,7 @@
-﻿  Agent.cpp
-b:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\cell.h(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-b:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\agent.cpp(366): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-b:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\list.h(176): warning C4018: '>=': signed/unsigned mismatch
-  b:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\list.h(175): note: while compiling class template member function 'Coordinate &List<Coordinate>::operator [](unsigned int)'
-  b:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\agent.cpp(157): note: see reference to function template instantiation 'Coordinate &List<Coordinate>::operator [](unsigned int)' being compiled
-  b:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\agent.cpp(130): note: see reference to class template instantiation 'List<Coordinate>' being compiled
-b:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\list.h(190): warning C4018: '>=': signed/unsigned mismatch
-  b:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\list.h(189): note: while compiling class template member function 'Coordinate &List<Coordinate>::get(unsigned int)'
-  b:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\agent.cpp(299): note: see reference to function template instantiation 'Coordinate &List<Coordinate>::get(unsigned int)' being compiled
-  Generating Code...
-b:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\agent.cpp(385): warning C4172: returning address of local variable or temporary: lPath
-  Compiling...
-  Main.cpp
-b:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\cell.h(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  GridPrinters.cpp
-b:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\cell.h(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  Generating Code...
-  Robot Navigation.vcxproj -> B:\GitScratch\rbt_grid_nav\Robot Navigation\Debug\Robot Navigation.exe
-  Robot Navigation.vcxproj -> B:\GitScratch\rbt_grid_nav\Robot Navigation\Debug\Robot Navigation.pdb (Partial PDB)
+﻿  ListPrinters.cpp
+c:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\list.h(176): warning C4018: '>=': signed/unsigned mismatch
+  c:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\list.h(175): note: while compiling class template member function 'Cardinal &List<Cardinal>::operator [](unsigned int)'
+  c:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\listprinters.cpp(9): note: see reference to function template instantiation 'Cardinal &List<Cardinal>::operator [](unsigned int)' being compiled
+  c:\gitscratch\rbt_grid_nav\robot navigation\robot navigation\listprinters.cpp(6): note: see reference to class template instantiation 'List<Cardinal>' being compiled
+  Robot Navigation.vcxproj -> C:\GitScratch\rbt_grid_nav\Robot Navigation\Debug\Robot Navigation.exe
+  Robot Navigation.vcxproj -> C:\GitScratch\rbt_grid_nav\Robot Navigation\Debug\Robot Navigation.pdb (Partial PDB)

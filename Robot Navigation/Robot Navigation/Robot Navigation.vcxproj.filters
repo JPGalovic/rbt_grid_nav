@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Container">
+      <UniqueIdentifier>{ba27d57e-52ab-4f12-b06b-0b9062c04e94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Type">
+      <UniqueIdentifier>{63891923-603b-4634-bc68-0e0a0af15f6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Search Algorithem">
+      <UniqueIdentifier>{7d6ede8d-d5d8-4897-bc94-bceee44aeddf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Printer">
+      <UniqueIdentifier>{d377b187-c4fb-4064-80aa-6d1e3803d4aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -27,31 +39,43 @@
     <ClCompile Include="GridPrinters.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ListPrinters.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Cell.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Grid.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Agent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Coordinate.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Grid.h">
+      <Filter>Header Files\Container</Filter>
     </ClInclude>
-    <ClInclude Include="ListNode.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Cell.h">
+      <Filter>Header Files\Container</Filter>
     </ClInclude>
     <ClInclude Include="ListNodeIter.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Container</Filter>
+    </ClInclude>
+    <ClInclude Include="ListNode.h">
+      <Filter>Header Files\Container</Filter>
     </ClInclude>
     <ClInclude Include="List.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Container</Filter>
+    </ClInclude>
+    <ClInclude Include="AStar.h">
+      <Filter>Header Files\Search Algorithem</Filter>
+    </ClInclude>
+    <ClInclude Include="Coordinate.h">
+      <Filter>Header Files\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="Cardinal.h">
+      <Filter>Header Files\Type</Filter>
     </ClInclude>
     <ClInclude Include="GridPrinters.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Printer</Filter>
+    </ClInclude>
+    <ClInclude Include="ListPrinters.h">
+      <Filter>Header Files\Printer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

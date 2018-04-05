@@ -129,6 +129,7 @@
     <ClInclude Include="ListNode.h" />
     <ClInclude Include="ListNodeIter.h" />
     <ClInclude Include="ListPrinters.h" />
+    <ClInclude Include="NTree.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

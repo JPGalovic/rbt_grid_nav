@@ -77,5 +77,8 @@
     <ClInclude Include="ListPrinters.h">
       <Filter>Header Files\Printer</Filter>
     </ClInclude>
+    <ClInclude Include="NTree.h">
+      <Filter>Header Files\Container</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -5,7 +5,7 @@
  * Adapted from code developed for COS30008 Data Structures and Patterns
  * @author  J.P.Galovic
  * @version v1.0.3
- * @date 17-04-2018
+ * @date    18-04-2018
  */
 template<class T>
 class DLNode

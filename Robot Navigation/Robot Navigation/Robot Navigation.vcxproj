@@ -125,9 +125,6 @@
     <ClInclude Include="Coordinate.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="GridPrinters.h" />
-    <ClInclude Include="List.h" />
-    <ClInclude Include="ListNode.h" />
-    <ClInclude Include="ListNodeIter.h" />
     <ClInclude Include="ListPrinters.h" />
     <ClInclude Include="NTree.h" />
   </ItemGroup>

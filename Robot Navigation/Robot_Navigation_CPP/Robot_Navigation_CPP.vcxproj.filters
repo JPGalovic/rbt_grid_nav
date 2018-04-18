@@ -16,13 +16,30 @@
     <Filter Include="Header Files\Container">
       <UniqueIdentifier>{1156d896-5e32-4c2d-a16d-b9ebf7bf40ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Search Algorithems">
+      <UniqueIdentifier>{39ba0808-95b6-4419-bb4f-1ddd3dbad661}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="map_node.h">
-      <Filter>Header Files\Container</Filter>
-    </ClInclude>
     <ClInclude Include="DLNode.h">
       <Filter>Header Files\Container</Filter>
     </ClInclude>
+    <ClInclude Include="MapNode.h">
+      <Filter>Header Files\Container</Filter>
+    </ClInclude>
+    <ClInclude Include="List.h">
+      <Filter>Header Files\Container</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Header Files\Container</Filter>
+    </ClInclude>
+    <ClInclude Include="AStar.h">
+      <Filter>Header Files\Search Algorithems</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

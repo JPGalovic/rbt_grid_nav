@@ -53,15 +53,6 @@
     <ClInclude Include="Cell.h">
       <Filter>Header Files\Container</Filter>
     </ClInclude>
-    <ClInclude Include="ListNodeIter.h">
-      <Filter>Header Files\Container</Filter>
-    </ClInclude>
-    <ClInclude Include="ListNode.h">
-      <Filter>Header Files\Container</Filter>
-    </ClInclude>
-    <ClInclude Include="List.h">
-      <Filter>Header Files\Container</Filter>
-    </ClInclude>
     <ClInclude Include="AStar.h">
       <Filter>Header Files\Search Algorithem</Filter>
     </ClInclude>
